@@ -1,2 +1,3 @@
 src/vendor
 src/composer.lock
+src/db/app.db
