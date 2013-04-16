@@ -1,0 +1,37 @@
+{% extends "master.twig" %}
+
+{% block content %}
+  {% include 'menu.twig' %}
+  {% for post in posts %}
+  <div id="{{ post.id }}" class='entry {% if post.readed == null %} unread {% endif %} thumbnail'>
+    <div class='source'>
+      {% if post.readed == null %}
+        <i class="indicator icon-eye-open"></i> 
+      {% else %}
+        <i class="indicator icon-eye-close"></i> 
+      {% endif %}
+      {{post.name}}
+    </div >  
+    <div class='date'>
+      {{post.date|date("d/M/Y")}}
+    </div>  
+    <h2>
+      <a href='{{ post.link}}' target='_blank'>
+        {{ post.title |striptags}}
+      </a>
+    </h2>
+    <div>
+      {{ post.body |raw}}
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-error">
+    There is no Posts
+  </div>
+  {% endfor %}
+  {% if posts|length == 50 %}
+  <div class="next">
+    <a class="btn btn-success" href="/all?page={{ app.request.get('page', 1) + 1}}">More</a>
+  </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "master.twig" %}
+
+{% block content %}
+  {% include 'menu.twig' %}
+  <div id="subscription_new" class='thumbnail'>
+    <div class='row'>
+      <div class='span6'>
+        <h4>Subscribe</h4>
+        <input name='url' value='' /> <a class='btn btn-primary'>Subscribe</a>
+      </div>
+      <div class='span6'>
+        <h4>Or Import OPML</h4>
+        <form action='/subscriptions/import' method="POST" enctype="multipart/form-data">
+          <input type='file' name='opml' value='' />
+          <input type="submit" value="import" class='btn btn-primary' />
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="subscriptions" class=''>
+  {% for subscription in subscriptions %}
+  <div id="subscription_{{ subscription.id }}" class='subscription thumbnail'>
+    <div class=''>
+      <a class="btn btn-danger remove-subscription" data={{ subscription.id }}>Remove</a>
+      <div class='name'><a href="{{subscription.url}}" target="_blank">{{subscription.name}}</a></div>
+      <div class='detail'>
+        Last Update {{subscription.last_update|date("d/M/Y g:ia") }} 
+        Fails {{subscription.fail}}
+      </div>
+    </div >  
+  </div>
+  {% else %}
+  <div class="alert alert-error">
+    There is no Subscriptions
+  </div>
+  {% endfor %}
+  </div>
+{% endblock %}

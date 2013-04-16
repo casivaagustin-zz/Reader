@@ -1,0 +1,82 @@
+body {
+  padding: 10px;
+}
+
+.container {
+  background-color: #fff;
+  height: 100%;
+}
+
+.entry {
+  margin-bottom: 20px;
+  padding: 10px;
+  overflow: scroll;
+}
+
+.entry img {
+  max-width: 400px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.entry .source, .entry .date {
+  font-size: 14px;
+  line-height: auto;
+  font-weight: bold;
+  float: left;
+}
+
+.entry .date {
+  float: right;
+}
+
+.entry h2 {
+  clear: both;
+  padding: 20px 0;
+}
+
+.next {
+  text-align: center;
+  padding: 20px 0px;
+}
+
+.page-header h1 {
+  text-align: center;
+}
+
+form.login input {
+  margin: 10px 0px 20px 0px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+h1, h2, h3 {
+  line-height: 10px;
+}
+
+.subscription {
+  margin: 10px 0px;
+}
+
+.subscription .name {
+  font-weight: bold;
+  line-height: 12px;
+}
+
+.subscription .detail {
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.subscription .btn {
+  float: right;
+  font-weight: normal;
+}
+
+.alert {
+  text-align: center;
+}

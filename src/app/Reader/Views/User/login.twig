@@ -1,0 +1,27 @@
+{% extends "master.twig" %}
+
+{% block content %}
+<form action='/login' method="POST" class='login form-horizontal'>
+  <center>
+  <div>
+    <div>
+      User Name
+    </div>
+    <div>
+      <input type='text' name="data[name]" value=''></input>
+    </div>
+  </div>
+  <div>
+    <div>
+      Password
+    </div>
+    <div>
+      <input type='password' name="data[password]" value=''></input>
+    </div>
+  </div>
+  <div>
+    <button type="submit" class="btn">Login</button>
+  </div>
+  </center>
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+    "require": {
+        "silex/silex": "1.0.*@dev",
+        "doctrine/dbal": "2.2.*",
+        "symfony/finder": "2.1.*",
+        "casivaagustin/phrequests": "dev-master",
+        "casivaagustin/feedtcher": "dev-master",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/console": "2.*",
+        "ezyang/htmlpurifier": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "Reader": "app/" }
+    }
+}

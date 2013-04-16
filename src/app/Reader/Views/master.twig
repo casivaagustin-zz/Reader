@@ -1,0 +1,25 @@
+{# empty Twig template #}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+        <title>Reader</title>
+        {% endblock %}
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/waypoints.js"></script>
+        <script src="/js/reader.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/css/main.css" rel="stylesheet" media="screen">
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div id="messages"></div>
+        <div class='page-header'>
+          <h1>Reader</h1>
+        </div>
+        <div id="content">
+          {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

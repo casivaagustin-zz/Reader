@@ -1,0 +1,31 @@
+{% extends "master.twig" %}
+
+{% block content %}
+  {% include 'menu.twig' %}
+  {% for post in posts %}
+  <div id="{{ post.id }}" class='entry unread thumbnail'>
+    <div class='source'>
+      <i class="indicator icon-eye-open"></i> 
+      {{post.name}}
+    </div >  
+    <div class='date'>
+      {{post.date|date("d/M/Y")}}
+    </div>  
+    <h2>
+      <a href='{{ post.link}}' target='_blank'>
+        {{ post.title |striptags}}
+      </a>
+    </h2>
+    <div>
+      {{ post.body |raw}}
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-error">
+    There is no Posts
+  </div>
+  {% endfor %}
+  <div class="next">
+    <a class="btn btn-success" href="/">More</a>
+  </div>
+{% endblock %}
