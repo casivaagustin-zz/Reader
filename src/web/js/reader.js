@@ -2,6 +2,7 @@
  * Type can be error, success, block, info
  */
 function message(message, type) {
+  $('body #messages').remove();
   $('body').prepend('<div id="messages" class="alert alert-' + type + '">\n\
     <button type="button" class="close" data-dismiss="alert">&times;</button>' 
     + message + '</div>');
@@ -73,5 +74,67 @@ $(document).ready(function() {
     }); 
 
 
+  });
+  
+  $('.btn.subscribe').click(function() {
+      var input_data_name = $('input#data_name');
+      var control_input_data_name = $(input_data_name.parent());
+      var group_input_data_name = $(control_input_data_name.parent()); 
+
+
+      var input_data_pass = $('input#data_password');
+      var control_input_data_pass = $(input_data_pass.parent());
+      var group_input_data_pass = $(control_input_data_pass.parent()); 
+      
+      var name = input_data_name.val ();  
+      var password = input_data_pass.val ();  
+      
+
+      $('span.help-inline', control_input_data_name).remove();
+      group_input_data_name.removeClass('error'); 
+      if (name == '' && !group_input_data_name.hasClass('error')) {
+        control_input_data_name.append('<span class="help-inline">Write an Email</span>');
+        group_input_data_name.addClass('error');
+      }
+
+      $('span.help-inline', control_input_data_pass).remove();
+      group_input_data_pass.removeClass('error'); 
+      if (password == '' && !input_data_pass.hasClass('error')) {
+        control_input_data_pass.append('<span class="help-inline">Write a Password</span>');
+        group_input_data_pass.addClass('error');
+      }
+
+      if (name != '' && password != '') {
+        $.ajax({
+          url: '/user',
+          type: 'PUT',
+          data: { data: {name: name, password: password} },
+          success: function(data) {
+            message(data);  
+          },
+          error: function(data) {
+            message(data.responseText, 'error'); 
+          }
+        }) 
+      }
+      
+      console.log('subscribe');
+  });
+    
+  $('.btn.recover-pass').click(function() {
+    var input_data_name = $('input#data_name');
+    var control_input_data_name = $(input_data_name.parent());
+    var group_input_data_name = $(control_input_data_name.parent()); 
+    
+    var name = input_data_name.val ();  
+    
+    $('span.help-inline', control_input_data_name).remove();
+    group_input_data_name.removeClass('error'); 
+    if (name == '') {
+      control_input_data_name.append('<span class="help-inline">Write an Email</span>');
+      group_input_data_name.addClass('error');
+    }
+    
+    console.log('remember');
   });
 });

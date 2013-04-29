@@ -64,4 +64,15 @@ class User extends Model {
     global $app;
     return $app['db']->fetchAssoc('SELECT * from user WHERE name = ?', array($name));
   }
+
+  static public function create($name, $password) {
+    global $app;
+    
+    $app['db']->executeQuery('INSERT INTO user(name, password) VALUES(?,?)', 
+            array($name, $password)
+    );
+
+    return true;
+  }
+  
 }

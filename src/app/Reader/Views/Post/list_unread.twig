@@ -22,10 +22,12 @@
   </div>
   {% else %}
   <div class="alert alert-error">
-    There is no Posts
+    All posts were read
   </div>
   {% endfor %}
+  {% if posts|length > 0 %}
   <div class="next">
     <a class="btn btn-success" href="/">More</a>
   </div>
+  {% endif %}
 {% endblock %}

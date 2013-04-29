@@ -2,26 +2,28 @@
 
 {% block content %}
 <form action='/login' method="POST" class='login form-horizontal'>
-  <center>
-  <div>
-    <div>
-      User Name
-    </div>
-    <div>
-      <input type='text' name="data[name]" value=''></input>
+  <div class='control-group'>
+    <label class="control-label">
+      Email
+    </label>
+    <div class='controls'>
+      <input id="data_name" type='text' name="data[name]" value=''></input>
     </div>
   </div>
-  <div>
-    <div>
+  <div class='control-group'>
+    <label class="control-label">
       Password
+    </label>
+    <div class='controls'>
+      <input id="data_password" type='password' name="data[password]" value=''></input>
     </div>
+  </div>
+  <div class='buttons'>
     <div>
-      <input type='password' name="data[password]" value=''></input>
+      <button type="button" class="btn subscribe">Subscribe</button>
+      <button type="button" class="btn recover-pass">Recover Password</a>
+      <button type="submit" class="btn btn-success">Login</button>
     </div>
   </div>
-  <div>
-    <button type="submit" class="btn">Login</button>
-  </div>
-  </center>
 </form>
 {% endblock %}

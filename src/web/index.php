@@ -106,4 +106,10 @@ $app->post('/subscription', function (Request $request) use ($app) {
   return $subscription->add($data);
 });
 
+$app->put('/user', function(Request $request) {
+  $user = new \Reader\Controler\User();
+  $data = $request->get('data');
+  return $user->register($data['name'], $data['password']); 
+});
+
 $app->run();

@@ -19,7 +19,7 @@
   </div>
   <div id="subscriptions" class=''>
   {% for subscription in subscriptions %}
-  <div id="subscription_{{ subscription.id }}" class='subscription thumbnail'>
+  <div id="subscription_{{ subscription.id }}" class='subscription thumbnail {{ subscription.id ? '' : 'disabled' }}'>
     <div class=''>
       <a class="btn btn-danger remove-subscription" data={{ subscription.id }}>Remove</a>
       <div class='name'><a href="{{subscription.url}}" target="_blank">{{subscription.name}}</a></div>

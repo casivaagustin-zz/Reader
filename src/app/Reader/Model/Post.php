@@ -82,6 +82,7 @@ class Post extends Model {
    */
   static public function import($source, $feed){
     global $app;
+    $imported = 0;
     if (self::haveNewPosts($source, $feed)) {
       $app['db']->executeQuery('UPDATE source 
           SET hash = ?, last_update = ? 
@@ -107,9 +108,11 @@ class Post extends Model {
                 $entry->date,
               )
           ); 
+          $imported++;
         }
       }
     }
+    return $imported;
   }
 
   /**

@@ -20,23 +20,39 @@ $console->register('fetch')
         ->setHelp('Usage: <info>./php app/console/fetch.php fetch</info>')
         ->setCode(
                 function(InputInterface $input, OutputInterface $output) use ($app) {
-                  $output->write("Contacting external data source ...\n");
+                  $output->write("Checking Sources\n");
                   $sources = $app['db']->fetchAll('SELECT * FROM source WHERE enabled = "true"');
+                  $total_new = 0;
+                  $total_fail = 0;
                   foreach ($sources as $source) {
                     try {
                       $feed = \Feedtcher\Feedtcher::fectch($source['url']);
-                      \Reader\Model\Post::import($source, $feed);
+                      $imported = \Reader\Model\Post::import($source, $feed);
 
-                      $output->write('Imported ' . $feed->title
-                              . ' Total :' . count($feed->collection) . "\n");
+                      if ($imported > 0) {
+                        $output->write('Imported from ' . $feed->title . ' ' . $imported . " new Posts\n");
+                      
+                        $total_new += $imported;
+                      } else {
+                        $output->write('Nothing new in ' . $feed->title . "\n");
+                      }
+                      
                     } catch (\Exception $e) {
-                      $app['db']->executeQuery('UPDATE source SET fail = (fail + 1) 
-                          WHERE id = ?', array($source['id']));
-
-                      $output->write('Fail processing ' . $source['name']
-                              . '- ' . $e->getMessage() . "\n");
+                      $total_fail++;
+                      if ($source['fail'] > 5) {
+                        $app['db']->executeQuery('UPDATE source SET fail = (fail + 1) 
+                            WHERE id = ?', array($source['id']));
+                        $output->write('Fail processing ' . $source['name'] . "\n" . $source['url']
+                             . "\n" . $e->getMessage() . "\n");
+                      } else {
+                        $app['db']->executeQuery('UPDATE source SET enabled = "false" 
+                            WHERE id = ?', array($source['id'])); 
+                        $output->write('Fail processing ' . $source['name'] . "\n" . $source['url']
+                             . "\nDisabling Source");
+                      }
                     }
                   }
+                  $output->write("Done!\nNew $total_new Fails $total_fail");
                 }
 );
 

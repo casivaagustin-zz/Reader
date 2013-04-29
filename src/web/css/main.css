@@ -80,3 +80,16 @@ h1, h2, h3 {
 .alert {
   text-align: center;
 }
+
+.subscription.disabled {
+  background-color: #eee;
+}
+
+form.login {
+  width: 410px;
+  margin: 0px auto;
+}
+
+form.login .buttons {
+  text-align: right; 
+}
