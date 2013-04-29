@@ -26,7 +26,7 @@ $console->register('fetch')
                   $total_fail = 0;
                   foreach ($sources as $source) {
                     try {
-                      $feed = \Feedtcher\Feedtcher::fectch($source['url']);
+                      $feed = \Feedtcher\Feedtcher::fetch($source['url']);
                       $imported = \Reader\Model\Post::import($source, $feed);
 
                       if ($imported > 0) {

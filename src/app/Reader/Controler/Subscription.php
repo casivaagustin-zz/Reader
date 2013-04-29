@@ -26,7 +26,7 @@ class Subscription extends Controler {
     }
     
     try { 
-      $feed = \Feedtcher\Feedtcher::fectch($data['url']);
+      $feed = \Feedtcher\Feedtcher::fetch($data['url']);
       $subscription = \Reader\Model\Subscription::add($feed->title, $data['url']);
       return json_encode($subscription);
     } catch(\Exception $e) {
