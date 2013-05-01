@@ -112,4 +112,10 @@ $app->put('/user', function(Request $request) {
   return $user->register($data['name'], $data['password']); 
 });
 
+$app->post('/user/recover', function(Request $request){
+  $user = new \Reader\Controler\User();
+  $data = $request->get('data');
+  return $user->recover($data['name']); 
+});
+
 $app->run();

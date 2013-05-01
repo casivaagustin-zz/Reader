@@ -2,12 +2,18 @@
 
 {% block content %}
 <form action='/login' method="POST" class='login form-horizontal'>
+  {% if(message) %}
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    {{ message }}
+  </div>
+  {% endif %}
   <div class='control-group'>
     <label class="control-label">
       Email
     </label>
     <div class='controls'>
-      <input id="data_name" type='text' name="data[name]" value=''></input>
+      <input id="data_name" type='email' name="data[name]" value='' required></input>
     </div>
   </div>
   <div class='control-group'>

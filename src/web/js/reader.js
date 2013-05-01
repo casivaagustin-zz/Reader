@@ -1,12 +1,3 @@
-/**
- * Type can be error, success, block, info
- */
-function message(message, type) {
-  $('body #messages').remove();
-  $('body').prepend('<div id="messages" class="alert alert-' + type + '">\n\
-    <button type="button" class="close" data-dismiss="alert">&times;</button>' 
-    + message + '</div>');
-}
 
 $(document).ready(function() {
   $('#content .entry.unread').waypoint(function(){
@@ -92,7 +83,7 @@ $(document).ready(function() {
 
       $('span.help-inline', control_input_data_name).remove();
       group_input_data_name.removeClass('error'); 
-      if (name == '' && !group_input_data_name.hasClass('error')) {
+      if ((name == '' || !isEmail(name)) && !group_input_data_name.hasClass('error')) {
         control_input_data_name.append('<span class="help-inline">Write an Email</span>');
         group_input_data_name.addClass('error');
       }
@@ -117,8 +108,6 @@ $(document).ready(function() {
           }
         }) 
       }
-      
-      console.log('subscribe');
   });
     
   $('.btn.recover-pass').click(function() {
@@ -130,11 +119,58 @@ $(document).ready(function() {
     
     $('span.help-inline', control_input_data_name).remove();
     group_input_data_name.removeClass('error'); 
-    if (name == '') {
+    if (name == '' || !isEmail(name)) {
       control_input_data_name.append('<span class="help-inline">Write an Email</span>');
       group_input_data_name.addClass('error');
+      return false;
     }
-    
-    console.log('remember');
+  
+    if (name != '') {
+      $.ajax({
+        url: '/user/recover',
+        type: 'POST',
+        data: { data: {name: name } },
+        success: function(data) {
+          message(data);  
+        },
+        error: function(data) {
+          message(data.responseText, 'error'); 
+        }
+      });
+    }  
   });
 });
+
+var CLOSE_BUTTON = '<button type="button" class="close" data-dismiss="alert">&times;</button>'; 
+/**
+ * Test an email to verify if is an email.
+ * 
+ * @param email Srting
+ * 
+ * @return boolean
+ */
+function isEmail(email) { 
+  var regEx = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/; 
+  return regEx.test(email); 
+}
+
+/**
+ * Prints a message, the message will disapear after 5 seconds.
+ * 
+ * @param String Message
+ * @param String Type can be error, success, block, info
+ * 
+ */
+function message(message, type) {
+  $('body #messages').remove();
+  var messageHolder = $(document.createElement('div'));
+  messageHolder.id = 'messages';
+  messageHolder.addClass('alert');
+  messageHolder.addClass('alert-' + type);
+  messageHolder.html(CLOSE_BUTTON + message);
+  $('body').prepend(messageHolder);
+
+  setTimeout(function() {
+    messageHolder.fadeOut();
+  }, 5000);
+}

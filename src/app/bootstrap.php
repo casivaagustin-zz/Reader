@@ -15,6 +15,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/Reader/Views',
 ));
 
+$app['twig']->addGlobal('Post', new \Reader\Model\Post());
+
 $app['debug'] = true;
 
 return $app;

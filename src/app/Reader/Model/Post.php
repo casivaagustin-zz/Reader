@@ -5,7 +5,7 @@ namespace Reader\Model;
 class Post extends Model {
 
   /**
-   * Gets Posts
+   * Gets Unread Posts
    * 
    * @global \Silex\Application $app
    * @param Integer $page : Page Number, Optional, Default 1
@@ -15,7 +15,8 @@ class Post extends Model {
     global $app;
     $user = $app['session']->get('user');
     
-    $posts = $app['db']->fetchAll('SELECT p.id, p.title, p.link, p.body, p.date, s.id as source_id, s.name
+    $posts = $app['db']->fetchAll('SELECT p.id, p.title, p.link, p.body, p.date, 
+        s.id as source_id, s.name
       FROM (post p INNER JOIN source s ON p.source_id = s.id) 
         INNER JOIN user_sources us ON us.source_id = s.id
       WHERE us.user_id = ?
@@ -36,7 +37,8 @@ class Post extends Model {
     global $app;
     $user = $app['session']->get('user');
     
-    $posts = $app['db']->fetchAll('SELECT p.id, p.title, p.link, p.body, p.date, s.id as source_id, s.name, r.date_time as readed
+    $posts = $app['db']->fetchAll('SELECT p.id, p.title, p.link, p.body, p.date, 
+        s.id as source_id, s.name, r.date_time as readed
       FROM (post p INNER JOIN source s ON p.source_id = s.id) 
         INNER JOIN user_sources us ON us.source_id = s.id
         LEFT OUTER JOIN read r ON r.post_id = p.id AND r.user_id = us.user_id
@@ -132,5 +134,26 @@ class Post extends Model {
     }
     return true;
   }
+
+  /**
+   * Gets Unread Posts Counter
+   * 
+   * @global \Silex\Application $app
+   * 
+   * @return Integer
+   */
+  public function getUnreads() {
+    global $app;
+    $user = $app['session']->get('user');
+    
+    $posts = $app['db']->fetchAssoc('SELECT count(*) as unread
+      FROM (post p INNER JOIN source s ON p.source_id = s.id) 
+        INNER JOIN user_sources us ON us.source_id = s.id
+      WHERE us.user_id = ?
+      AND p.id NOT IN (SELECT p.id FROM read as r WHERE r.post_id = p.id AND user_id = ?)', 
+      array ($user['ID'], $user['ID']));
+    return $posts['unread'];
+  }
+  
 }
 
