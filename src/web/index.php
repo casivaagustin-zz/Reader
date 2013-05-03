@@ -68,7 +68,6 @@ $app->get('/subscriptions', function () use ($app) {
 });
 
 $app->post('/subscriptions/import', function (Request $request) use ($app) {
-  $file = $request->files->get('opml');
   
   if (!Reader\Model\User::isLoggedIn()) {
     return $app->redirect('/login');
@@ -80,7 +79,7 @@ $app->post('/subscriptions/import', function (Request $request) use ($app) {
       libxml_use_internal_errors(true);
       \Reader\Model\Subscription::import($opml, $app['session']->get('user')); 
     } catch(\Exception $e) {
-      //Write Some lgo
+      //Write Some log
     }
     unlink($_FILES['opml']['tmp_name']);
   }

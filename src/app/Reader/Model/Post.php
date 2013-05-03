@@ -22,7 +22,9 @@ class Post extends Model {
       WHERE us.user_id = ?
       AND p.id NOT IN (SELECT p.id FROM read as r WHERE r.post_id = p.id AND user_id = ?) 
       ORDER BY date DESC
-      LIMIT ? OFFSET ?', array ($user['ID'], $user['ID'], self::PAGE_SIZE, ($page * self::PAGE_SIZE)));
+      LIMIT ? OFFSET ?', 
+      array ($user['ID'], $user['ID'], self::PAGE_SIZE, ($page * self::PAGE_SIZE))
+    );
     return $posts;
   }
 

@@ -4,7 +4,7 @@ namespace Reader\Model;
 
 abstract class Model {
   
-  const PAGE_SIZE = 50;
+  const PAGE_SIZE = 25;
   /**
    * Creates a new instance 
    * 

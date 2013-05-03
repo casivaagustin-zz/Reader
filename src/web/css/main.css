@@ -35,6 +35,7 @@ body {
 .entry h2 {
   clear: both;
   padding: 20px 0;
+  line-height: 21px;
 }
 
 .next {
